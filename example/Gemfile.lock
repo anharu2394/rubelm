@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    rubelm (0.1.0)
+    rubelm (0.0.1)
       opal
       opal-browser
       opal-sprockets
@@ -10,9 +10,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.0)
-    concurrent-ruby (1.0.5)
+    concurrent-ruby (1.1.3)
     hike (1.2.3)
-    opal (0.11.3)
+    opal (0.11.4)
       ast (>= 2.3.0)
       hike (~> 1.2)
       parser (= 2.3.3.1)
@@ -27,7 +27,7 @@ GEM
     paggio (0.2.6)
     parser (2.3.3.1)
       ast (~> 2.2)
-    rack (2.0.5)
+    rack (2.0.6)
     sourcemap (0.1.1)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
@@ -38,7 +38,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  opal-sprockets
   rubelm!
 
 BUNDLED WITH
