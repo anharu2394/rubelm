@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubelm (0.1.0)
+    rubelm (0.0.1)
       opal
       opal-browser
       opal-sprockets
