@@ -13,13 +13,3 @@ Opal::RSpec::RakeTask.new(:default) do |server, task|
   server.append_path 'opal'
 	server.debug = true
 end
-
-desc "start server"
-task :start do
-  WEBrick::HTTPServer.new(:DocumentRoot => "./web", :Port => 8787).start
-end
-
-desc "build opal"
-task :build do
-  require "./lib/rubelm/build"
-end
