@@ -1,14 +1,14 @@
 # Rubelm
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rubelm`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+*Rubelm* is A Opal library for building web applications.
+Gem URL : https://rubygems.org/gems/rubelm
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
+gem 'opal-sprockets'
 gem 'rubelm'
 ```
 
@@ -16,20 +16,57 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install rubelm
-
 ## Usage
 
-TODO: Write usage instructions here
+Please run on your application directory.
 
-## Development
+    $ mkdir app
+    $ touch app/app.rb config.ru
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+your application directory tree shoud be like this.
+```
+.
+├── Gemfile
+├── Gemfile.lock
+├── app
+│   └── app.rb
+└── config
+```
+Please edit `config.ru`
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+require 'bundler'
+Bundler.require
+
+run Opal::Sprockets::Server.new { |s|
+  s.append_path 'app'
+  s.debug = true
+  s.main = 'app'
+}
+```
+
+Please edit `app/app.rb`
+
+```ruby
+require "rubelm"
+require "opal-browser"
+include Rubelm::Html
+view = div({class: "hello"},[
+    div({class:"world"}, "hello, world!")
+  ])
+Rubelm::main(view,$document.body)
+```
+
+ Please run.
+    
+    $ bundle
+    $ bundle exec rackup
+
+  You can see on http://localhost:9292
+  
+  ![image](https://user-images.githubusercontent.com/26423094/48298304-af610f80-e4fe-11e8-85ce-785399d58ab6.png)
+
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rubelm.
+Bug reports and pull requests are welcome on GitHub at https://github.com/anharu2394/rubelm.
