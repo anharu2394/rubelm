@@ -6,7 +6,7 @@ require "rubelm/version"
 Gem::Specification.new do |spec|
   spec.name          = "rubelm"
   spec.version       = Rubelm::VERSION
-  spec.authors       = ["安藤春香"]
+  spec.authors       = ["Anharu"]
   spec.email         = ["haruan2394@gmail.com"]
 
   spec.summary       = %q{ Rubelm}
