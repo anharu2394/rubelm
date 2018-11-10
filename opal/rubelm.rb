@@ -1,4 +1,4 @@
-require "opal"
+require 'opal'
 module Rubelm
 	def self.main(view,element)
 		Vdom::render(view,element)
