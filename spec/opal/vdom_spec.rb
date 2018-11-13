@@ -55,6 +55,69 @@ describe "test vdom" do
         expect(a.child.child.text).to eq("inner")
       end
     end
+    describe 'rDOM to vDOM' do
+      it 'one div child' do
+        root << Browser::DOM::Element::create('div') 
+        vdom = Rubelm::Vdom::recycle(root_child)
+        expect(vdom).to eq({
+          nodeName: "div",
+          attributes: {},
+          children: []
+        })
+      end
+      it 'one p child' do
+        root <<  Browser::DOM::Element::create('p')
+        vdom = Rubelm::Vdom::recycle(root_child)
+        expect(vdom).to eq({
+          nodeName: "p",
+          attributes: {},
+          children: []
+        })
+      end
+      it 'div child include attributes' do
+        ele = Browser::DOM::Element::create('div')
+        ele[:class] = "test"
+        root << ele
+        vdom = Rubelm::Vdom::recycle(root_child)
+        expect(vdom).to eq({
+          nodeName: "div",
+          attributes: {class: "test"},
+          children: []
+        })
+      end
+      it 'div child include attributes' do
+        ele = Browser::DOM::Element::create('div')
+        ele[:class] = "test"
+        ele[:id] = "t"
+        root << ele
+        vdom = Rubelm::Vdom::recycle(root_child)
+        expect(vdom).to eq({
+          nodeName: "div",
+          attributes: {class: "test",id: "t"},
+          children: []
+        })
+      end
+      it 'div child include attributes has child which has attributes' do
+        ele = Browser::DOM::Element::create('div')
+        ele[:class] = "test"
+        ele[:id] = "t"
+        inner_ele = Browser::DOM::Element::create('div')
+        inner_ele[:class] = "test"
+        inner_ele[:id] = "t"
+        ele << inner_ele
+        root << ele
+        vdom = Rubelm::Vdom::recycle(root_child)
+        expect(vdom).to eq({
+          nodeName: "div",
+          attributes: {class: "test",id: "t"},
+          children: [
+            {
+              nodeName: "div",
+              attributes: {class: "test",id: "t"},
+              children: []
+            }]
+        })
+      end
     end
   end
 end
