@@ -136,5 +136,30 @@ describe "test vdom" do
         })
       end
     end
+    describe 'get Vdom diff and change Rdom' do
+      it 'get string diff' do
+        old_node = div({},'morning')
+        doc = Rubelm::Vdom::render(old_node,root)
+        new_node = {
+          nodeName: "div",
+          attributes: {},
+          children: ["night"]
+        }
+        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        expect(new_doc.child.name).to eq("DIV")
+        expect(new_doc.child.text). to eq("night")
+      end
+      it 'get tag diff' do
+        old_node = p({})
+        doc = Rubelm::Vdom::render(old_node,root)
+        new_node = {
+          nodeName: "div",
+          attributes: {},
+          children: []
+        }
+        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        expect(new_doc.child.name).to eq("DIV")
+      end
+    end
   end
 end
