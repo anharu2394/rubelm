@@ -13,6 +13,7 @@ describe "test vdom" do
     it 'div' do
       a = Rubelm::Vdom::render(div(),root)
       expect(a.child.name).to eq("DIV")
+    let(:root_child) {$document.body.element_children.to_ary[1].elements.to_ary[0]}
     end
     it 'div attributes only class' do
       a = Rubelm::Vdom::render(div({class: "test"}),root)
