@@ -24,6 +24,13 @@ describe "test html" do
         children: []
       })	
     end
+    it 'include text' do
+      expect(div({class: "test", id: "t"}, "hello")).to eq({
+        nodeName: "div",
+        attributes: {class: "test", id: "t"},
+        children: 'hello'
+      })	
+    end
     it 'children' do
       expect(div({},[div()])).to eq({
         nodeName: "div",
