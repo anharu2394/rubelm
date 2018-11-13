@@ -28,4 +28,10 @@ module Rubelm::Vdom
       children: children
     }
   end
+  def self.patch(old_node,new_node,root)
+    ele = root.elements.to_ary[0]
+    root.elements.to_ary[0].name = 'DIV'
+    ele.text = new_node[:children][0]
+    root
+  end
 end
