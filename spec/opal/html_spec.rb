@@ -28,7 +28,14 @@ describe "test html" do
       expect(div({class: "test", id: "t"}, "hello")).to eq({
         nodeName: "div",
         attributes: {class: "test", id: "t"},
-        children: 'hello'
+        children: ['hello']
+      })	
+    end
+    it 'include number' do
+      expect(div({class: "test", id: "t"}, 33)).to eq({
+        nodeName: "div",
+        attributes: {class: "test", id: "t"},
+        children: [33]
       })	
     end
     it 'children' do
@@ -54,6 +61,21 @@ describe "test html" do
             attributes: {class: "inner", id: "i"},
             children: []
           }
+        ]
+      })
+    end
+    it 'children are ele and text' do
+      expect(div({class:"test",id:"t"},['hello',div({class:"inner",id:"i"}),'yeah'])).to eq({
+        nodeName: "div",
+        attributes: {class: "test", id: "t"},
+        children: [
+          'hello',
+          {
+            nodeName: "div",
+            attributes: {class: "inner", id: "i"},
+            children: []
+          },
+          'yeah'
         ]
       })
     end

@@ -35,6 +35,10 @@ describe "test vdom" do
         a = Rubelm::Vdom::render(div({},"hello"),root)
         expect(a.child.text). to eq("hello")
       end
+      it 'include text' do
+        a = Rubelm::Vdom::render(div({},33),root)
+        expect(a.child.text). to eq("33")
+      end
       it 'include child' do
         a = Rubelm::Vdom::render(div({id: "outer"},[div({id: "inner"})]),root)
         expect(a.child[:id]).to eq("outer")
@@ -95,6 +99,19 @@ describe "test vdom" do
           nodeName: "div",
           attributes: {class: "test",id: "t"},
           children: []
+        })
+      end
+      it 'div child include attributes and string' do
+        ele = Browser::DOM::Element::create('div')
+        ele[:class] = "test"
+        ele[:id] = "t"
+        ele.text = "hello"
+        root << ele
+        vdom = Rubelm::Vdom::recycle(root_child)
+        expect(vdom).to eq({
+          nodeName: "div",
+          attributes: {class: "test",id: "t"},
+          children: ["hello"]
         })
       end
       it 'div child include attributes has child which has attributes' do
