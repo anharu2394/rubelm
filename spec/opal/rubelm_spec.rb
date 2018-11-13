@@ -1,5 +1,5 @@
 require "spec_helper"
-include Rubelm::Html
+Rubelm::Html.def_tags('div','p')
 describe "rubelm" do
   it 'does something' do
     expect(true).to eq(true)

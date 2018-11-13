@@ -1,4 +1,5 @@
 require "spec_helper"
+Rubelm::Html.def_tags('div','p')
 include Rubelm::Html
 describe "test vdom" do
   describe 'view render' do
