@@ -17,4 +17,19 @@ module Rubelm::Vdom
     end
     parent << element
   end
+  def self.recycle(ele)
+    attributes = {}
+    children = []
+    ele.attributes.each  do |name, value|
+      attributes[name] = value
+    end
+    ele.elements.to_ary.each do |node|
+      children << recycle(node)
+    end
+    node = {
+      nodeName: ele.name.downcase,
+      attributes: attributes,
+      children: children
+    }
+  end
 end
