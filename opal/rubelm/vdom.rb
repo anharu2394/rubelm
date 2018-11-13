@@ -8,12 +8,8 @@ module Rubelm::Vdom
     vdom[:attributes].each do |name, val|
       element.set(name,val)
     end
-    if vdom[:children].class == Array
-      vdom[:children].each do |child|
-        create(child, element)
-      end
-    else
-      element.text = vdom[:children]
+    vdom[:children].each do |child|
+        child.instance_of?(Hash) ? create(child, element) : element.text = child
     end
     parent << element
   end
