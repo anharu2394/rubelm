@@ -19,8 +19,8 @@ module Rubelm::Vdom
     ele.attributes.each  do |name, value|
       attributes[name] = value
     end
-    ele.elements.to_ary.each do |node|
-      children << recycle(node)
+    ele.children.to_ary.each do |node|
+      node.instance_of?(Browser::DOM::Element) ? children << recycle(node) : children << node.whole
     end
     node = {
       nodeName: ele.name.downcase,
