@@ -8,6 +8,7 @@ describe "test vdom" do
     end
     after do
       $document.body.element_children.to_ary[1].clear
+      $document.body.element_children.to_ary[1].remove
     end
     let(:root) {$document.body.element_children.to_ary[1]}
     let(:root_child) {$document.body.element_children.to_ary[1].elements.to_ary[0]}
