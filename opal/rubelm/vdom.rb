@@ -33,12 +33,13 @@ module Rubelm::Vdom
     if old_node[:nodeName] != new_node[:nodeName]
       ele.remove
       create(new_node,root)
-    elsif ele.attributes.namespace != new_node[:attributes]
-      ele.attributes.merge!(new_node[:attributes])
-      root
-    end
-    new_node[:children].each_with_index do |child, i|
-      child.instance_of?(Hash) ? patch(old_node[:children[i], child, ele]) : ele.text = child
+    else
+      if ele.attributes.namespace != new_node[:attributes]
+        ele.attributes.merge!(new_node[:attributes])
+      end
+      new_node[:children].each_with_index do |child, i|
+        child.instance_of?(Hash) ? patch(old_node[:children][i], child, ele) : ele.text = child
+      end
     end
     root
   end
