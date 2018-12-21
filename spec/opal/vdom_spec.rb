@@ -149,7 +149,7 @@ describe "test vdom" do
         expect(new_doc.child.name).to eq("DIV")
         expect(new_doc.child.text). to eq("night")
       end
-      it 'get tag diff' do
+      it 'change tag' do
         old_node = p({})
         doc = Rubelm::Vdom::render(old_node,root)
         new_node = {
