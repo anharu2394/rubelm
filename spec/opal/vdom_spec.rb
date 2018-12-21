@@ -136,8 +136,8 @@ describe "test vdom" do
         })
       end
     end
-    describe 'get Vdom diff and change Rdom' do
-      it 'get string diff' do
+    describe 'change Rdom from new_node' do
+      it 'change string' do
         old_node = div({},'morning')
         doc = Rubelm::Vdom::render(old_node,root)
         new_node = {
