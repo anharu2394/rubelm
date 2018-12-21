@@ -160,6 +160,134 @@ describe "test vdom" do
         new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
         expect(new_doc.child.name).to eq("DIV")
       end
+      it 'change tag and attr' do
+        old_node = p({})
+        doc = Rubelm::Vdom::render(old_node,root)
+        new_node = {
+          nodeName: "div",
+          attributes: {class: "night"},
+          children: []
+        }
+        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        expect(new_doc.child.name).to eq("DIV")
+        expect(new_doc.child[:class]).to eq("night")
+      end
+      it 'change tag and its children' do
+        old_node = p({})
+        doc = Rubelm::Vdom::render(old_node,root)
+        new_node = {
+          nodeName: "div",
+          attributes: {},
+          children: [
+            {
+              nodeName: "div",
+              attributes: {},
+              children: []
+            }
+          ]
+        }
+        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        expect(new_doc.child.name).to eq("DIV")
+        expect(new_doc.child.child.name).to eq("DIV")
+      end
+      it 'change tag and its children and attr' do
+        old_node = p({})
+        doc = Rubelm::Vdom::render(old_node,root)
+        new_node = {
+          nodeName: "div",
+          attributes: {class: "outer"},
+          children: [
+            {
+              nodeName: "div",
+              attributes: {class: "inner"},
+              children: []
+            }
+          ]
+        }
+        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        expect(new_doc.child.name).to eq("DIV")
+        expect(new_doc.child.child.name).to eq("DIV")
+        expect(new_doc.child[:class]).to eq("outer")
+        expect(new_doc.child.child[:class]).to eq("inner")
+      end
+      it 'change one updated attr' do
+        old_node = div({class:"morning"})
+        doc = Rubelm::Vdom::render(old_node,root)
+        new_node = {
+          nodeName: "div",
+          attributes: {class: "night"},
+          children: []
+        }
+        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        expect(new_doc.child[:class]).to eq("night")
+      end
+      it 'change many updated attr' do
+        old_node = div({
+          class:"morning", 
+          id:"t",
+          "data-url": "/opal",
+          "data-hoge": "hoge"
+        })
+        doc = Rubelm::Vdom::render(old_node,root)
+        new_node = {
+          nodeName: "div",
+          attributes: {
+            class: "night",
+            id: "a",
+            "data-url": "/ruby",
+            "data-hoge": "hogehoge"
+          },
+          children: []
+        }
+        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        expect(new_doc.child[:class]).to eq("night")
+        expect(new_doc.child[:id]).to eq("a")
+        expect(new_doc.child["data-url"]).to eq("/ruby")
+        expect(new_doc.child["data-hoge"]).to eq("hogehoge")
+      end
+      it 'change many updated attr' do
+        old_node = div({
+          class:"morning", 
+          id:"t",
+          "data-url": "/opal",
+          "data-hoge": "hoge"
+        },"moring")
+        doc = Rubelm::Vdom::render(old_node,root)
+        new_node = {
+          nodeName: "div",
+          attributes: {
+            class: "night",
+            id: "a",
+            "data-url": "/ruby",
+            "data-hoge": "hogehoge"
+          },
+          children: ["night"]
+        }
+        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        expect(new_doc.child[:class]).to eq("night")
+        expect(new_doc.child[:id]).to eq("a")
+        expect(new_doc.child["data-url"]).to eq("/ruby")
+        expect(new_doc.child["data-hoge"]).to eq("hogehoge")
+        expect(new_doc.child.text).to eq("night")
+      end
+      it 'change one updated attr and child attr' do
+        old_node = div({class:"morning"},[div({class:"hello"})])
+        doc = Rubelm::Vdom::render(old_node,root)
+        new_node = {
+          nodeName: "div",
+          attributes: {class: "night"},
+          children: [
+            {
+              nodeName: "div",
+              attributes: {class: "bye"},
+              children: []
+            }
+          ]
+        }
+        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        expect(new_doc.child[:class]).to eq("night")
+        expect(new_doc.child.child[:class]).to eq("bye")
+      end
     end
   end
 end
