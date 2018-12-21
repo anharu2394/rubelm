@@ -14,39 +14,39 @@ describe "test vdom" do
     let(:root_child) {$document.body.element_children.to_ary[1].elements.to_ary[0]}
     describe 'div' do
       it 'div' do
-        a = Rubelm::Vdom::render(div(),root)
+        a = Rubelm::VDOM::render(div(),root)
         expect(a.child.name).to eq("DIV")
       end
       it 'attributes only class' do
-        a = Rubelm::Vdom::render(div({class: "test"}),root)
+        a = Rubelm::VDOM::render(div({class: "test"}),root)
         expect(a.child[:class]).to eq("test")
       end
       it 'attributes' do
-        a = Rubelm::Vdom::render(div({class: "test",id:"t"}),root)
+        a = Rubelm::VDOM::render(div({class: "test",id:"t"}),root)
         expect(a.child[:class]).to eq("test")
         expect(a.child[:id]).to eq("t")
       end
       it 'many attributes' do
-        a = Rubelm::Vdom::render(div({class: "testatt",id:"t", "data-url": "/opal"}), root)
+        a = Rubelm::VDOM::render(div({class: "testatt",id:"t", "data-url": "/opal"}), root)
         expect(a.child[:class]).to eq("testatt")
         expect(a.child[:id]).to eq("t")
         expect(a.child["data-url"]).to eq("/opal")
       end
       it 'include text' do
-        a = Rubelm::Vdom::render(div({},"hello"),root)
+        a = Rubelm::VDOM::render(div({},"hello"),root)
         expect(a.child.text). to eq("hello")
       end
       it 'include text' do
-        a = Rubelm::Vdom::render(div({},33),root)
+        a = Rubelm::VDOM::render(div({},33),root)
         expect(a.child.text). to eq("33")
       end
       it 'include child' do
-        a = Rubelm::Vdom::render(div({id: "outer"},[div({id: "inner"})]),root)
+        a = Rubelm::VDOM::render(div({id: "outer"},[div({id: "inner"})]),root)
         expect(a.child[:id]).to eq("outer")
         expect(a.child.child[:id]).to eq("inner")
       end
       it 'include child and text' do
-        a = Rubelm::Vdom::render(div({id: "outer"},[div({id: "inner"},"inner")]),root)
+        a = Rubelm::VDOM::render(div({id: "outer"},[div({id: "inner"},"inner")]),root)
         expect(a.child[:id]).to eq("outer")
         expect(a.child.child[:id]).to eq("inner")
         expect(a.child.child.text).to eq("inner")
@@ -54,7 +54,7 @@ describe "test vdom" do
     end
     describe 'p' do
       it 'include child and text' do
-        a = Rubelm::Vdom::render(div({id: "outer"},[p({id: "inner"},"inner")]),root)
+        a = Rubelm::VDOM::render(div({id: "outer"},[p({id: "inner"},"inner")]),root)
         expect(a.child[:id]).to eq("outer")
         expect(a.child.child[:id]).to eq("inner")
         expect(a.child.child.text).to eq("inner")
@@ -63,7 +63,7 @@ describe "test vdom" do
     describe 'rDOM to vDOM' do
       it 'one div child' do
         root << Browser::DOM::Element::create('div') 
-        vdom = Rubelm::Vdom::recycle(root_child)
+        vdom = Rubelm::VDOM::recycle(root_child)
         expect(vdom).to eq({
           nodeName: "div",
           attributes: {},
@@ -72,7 +72,7 @@ describe "test vdom" do
       end
       it 'one p child' do
         root <<  Browser::DOM::Element::create('p')
-        vdom = Rubelm::Vdom::recycle(root_child)
+        vdom = Rubelm::VDOM::recycle(root_child)
         expect(vdom).to eq({
           nodeName: "p",
           attributes: {},
@@ -83,7 +83,7 @@ describe "test vdom" do
         ele = Browser::DOM::Element::create('div')
         ele[:class] = "test"
         root << ele
-        vdom = Rubelm::Vdom::recycle(root_child)
+        vdom = Rubelm::VDOM::recycle(root_child)
         expect(vdom).to eq({
           nodeName: "div",
           attributes: {class: "test"},
@@ -95,7 +95,7 @@ describe "test vdom" do
         ele[:class] = "test"
         ele[:id] = "t"
         root << ele
-        vdom = Rubelm::Vdom::recycle(root_child)
+        vdom = Rubelm::VDOM::recycle(root_child)
         expect(vdom).to eq({
           nodeName: "div",
           attributes: {class: "test",id: "t"},
@@ -108,7 +108,7 @@ describe "test vdom" do
         ele[:id] = "t"
         ele.text = "hello"
         root << ele
-        vdom = Rubelm::Vdom::recycle(root_child)
+        vdom = Rubelm::VDOM::recycle(root_child)
         expect(vdom).to eq({
           nodeName: "div",
           attributes: {class: "test",id: "t"},
@@ -124,7 +124,7 @@ describe "test vdom" do
         inner_ele[:id] = "t"
         ele << inner_ele
         root << ele
-        vdom = Rubelm::Vdom::recycle(root_child)
+        vdom = Rubelm::VDOM::recycle(root_child)
         expect(vdom).to eq({
           nodeName: "div",
           attributes: {class: "test",id: "t"},
@@ -140,42 +140,42 @@ describe "test vdom" do
     describe 'change Rdom from new_node' do
       it 'change string' do
         old_node = div({},'morning')
-        doc = Rubelm::Vdom::render(old_node,root)
+        doc = Rubelm::VDOM::render(old_node,root)
         new_node = {
           nodeName: "div",
           attributes: {},
           children: ["night"]
         }
-        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        new_doc = Rubelm::VDOM::patch(old_node, new_node, root)
         expect(new_doc.child.name).to eq("DIV")
         expect(new_doc.child.text). to eq("night")
       end
       it 'change tag' do
         old_node = p({})
-        doc = Rubelm::Vdom::render(old_node,root)
+        doc = Rubelm::VDOM::render(old_node,root)
         new_node = {
           nodeName: "div",
           attributes: {},
           children: []
         }
-        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        new_doc = Rubelm::VDOM::patch(old_node, new_node, root)
         expect(new_doc.child.name).to eq("DIV")
       end
       it 'change tag and attr' do
         old_node = p({})
-        doc = Rubelm::Vdom::render(old_node,root)
+        doc = Rubelm::VDOM::render(old_node,root)
         new_node = {
           nodeName: "div",
           attributes: {class: "night"},
           children: []
         }
-        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        new_doc = Rubelm::VDOM::patch(old_node, new_node, root)
         expect(new_doc.child.name).to eq("DIV")
         expect(new_doc.child[:class]).to eq("night")
       end
       it 'change tag and its children' do
         old_node = p({})
-        doc = Rubelm::Vdom::render(old_node,root)
+        doc = Rubelm::VDOM::render(old_node,root)
         new_node = {
           nodeName: "div",
           attributes: {},
@@ -187,13 +187,13 @@ describe "test vdom" do
             }
           ]
         }
-        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        new_doc = Rubelm::VDOM::patch(old_node, new_node, root)
         expect(new_doc.child.name).to eq("DIV")
         expect(new_doc.child.child.name).to eq("DIV")
       end
       it 'change tag and its children and attr' do
         old_node = p({})
-        doc = Rubelm::Vdom::render(old_node,root)
+        doc = Rubelm::VDOM::render(old_node,root)
         new_node = {
           nodeName: "div",
           attributes: {class: "outer"},
@@ -205,7 +205,7 @@ describe "test vdom" do
             }
           ]
         }
-        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        new_doc = Rubelm::VDOM::patch(old_node, new_node, root)
         expect(new_doc.child.name).to eq("DIV")
         expect(new_doc.child.child.name).to eq("DIV")
         expect(new_doc.child[:class]).to eq("outer")
@@ -213,13 +213,13 @@ describe "test vdom" do
       end
       it 'change one updated attr' do
         old_node = div({class:"morning"})
-        doc = Rubelm::Vdom::render(old_node,root)
+        doc = Rubelm::VDOM::render(old_node,root)
         new_node = {
           nodeName: "div",
           attributes: {class: "night"},
           children: []
         }
-        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        new_doc = Rubelm::VDOM::patch(old_node, new_node, root)
         expect(new_doc.child[:class]).to eq("night")
       end
       it 'change many updated attr' do
@@ -229,7 +229,7 @@ describe "test vdom" do
           "data-url": "/opal",
           "data-hoge": "hoge"
         })
-        doc = Rubelm::Vdom::render(old_node,root)
+        doc = Rubelm::VDOM::render(old_node,root)
         new_node = {
           nodeName: "div",
           attributes: {
@@ -240,7 +240,7 @@ describe "test vdom" do
           },
           children: []
         }
-        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        new_doc = Rubelm::VDOM::patch(old_node, new_node, root)
         expect(new_doc.child[:class]).to eq("night")
         expect(new_doc.child[:id]).to eq("a")
         expect(new_doc.child["data-url"]).to eq("/ruby")
@@ -253,7 +253,7 @@ describe "test vdom" do
           "data-url": "/opal",
           "data-hoge": "hoge"
         },"moring")
-        doc = Rubelm::Vdom::render(old_node,root)
+        doc = Rubelm::VDOM::render(old_node,root)
         new_node = {
           nodeName: "div",
           attributes: {
@@ -264,7 +264,7 @@ describe "test vdom" do
           },
           children: ["night"]
         }
-        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        new_doc = Rubelm::VDOM::patch(old_node, new_node, root)
         expect(new_doc.child[:class]).to eq("night")
         expect(new_doc.child[:id]).to eq("a")
         expect(new_doc.child["data-url"]).to eq("/ruby")
@@ -273,7 +273,7 @@ describe "test vdom" do
       end
       it 'change one updated attr and child attr' do
         old_node = div({class:"morning"},[div({class:"hello"})])
-        doc = Rubelm::Vdom::render(old_node,root)
+        doc = Rubelm::VDOM::render(old_node,root)
         new_node = {
           nodeName: "div",
           attributes: {class: "night"},
@@ -285,7 +285,7 @@ describe "test vdom" do
             }
           ]
         }
-        new_doc = Rubelm::Vdom::patch(old_node, new_node, root)
+        new_doc = Rubelm::VDOM::patch(old_node, new_node, root)
         expect(new_doc.child[:class]).to eq("night")
         expect(new_doc.child.child[:class]).to eq("bye")
       end
