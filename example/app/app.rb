@@ -1,5 +1,6 @@
 require "rubelm"
 require "opal-browser"
+Rubelm::Html.def_tags('div')
 include Rubelm::Html
 view = div({class: "hello"},[
     div({class:"world"}, "hello, world!")
