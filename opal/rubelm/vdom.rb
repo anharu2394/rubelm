@@ -1,5 +1,6 @@
 require "opal-browser"
 module Rubelm::VDOM
+  require "rubelm/vdom/vnode"
   def self.render(view,root)
     self.create(view,root)
   end
