@@ -5,12 +5,12 @@ module Rubelm::VDOM
     self.create(view,root)
   end
   def self.create(vdom,parent)
-    element = Browser::DOM::Element.create(vdom[:nodeName])
-    vdom[:attributes].each do |name, val|
+    element = Browser::DOM::Element.create(vdom.name)
+    vdom.attributes.each do |name, val|
       element.set(name,val)
     end
-    vdom[:children].each do |child|
-        child.instance_of?(Hash) ? create(child, element) : element.text = child
+    vdom.children.each do |child|
+        child.instance_of?(VNode) ? create(child, element) : element.text = child
     end
     parent << element
   end
