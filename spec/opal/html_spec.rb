@@ -4,102 +4,82 @@ include Rubelm::Html
 describe "test html" do
   describe 'div' do
     it 'div' do
-      expect(div()).to eq({
-        nodeName: "div",
-        attributes: {},
-        children: []
-      })
+      node = div()
+      expect(node.name).to eq("div")
+      expect(node.attributes).to eq({})
+      expect(node.children).to eq([])
     end
     it 'attributes only class' do
-      expect(div({class: "test"})).to eq({
-        nodeName: "div",
-        attributes: {class: "test"},
-        children: []
-      })	
+      node = div({class: "test"})
+      expect(node.name).to eq("div")
+      expect(node.attributes).to eq({class: "test"})
+      expect(node.children).to eq([])
     end
     it 'attributes' do
-      expect(div({class: "test", id: "t"})).to eq({
-        nodeName: "div",
-        attributes: {class: "test", id: "t"},
-        children: []
-      })	
+      node = div({class: "test", id: "t"})
+      expect(node.name).to eq("div")
+      expect(node.attributes).to eq({class: "test", id: "t"})
+      expect(node.children).to eq([])
     end
     it 'include text' do
-      expect(div({class: "test", id: "t"}, "hello")).to eq({
-        nodeName: "div",
-        attributes: {class: "test", id: "t"},
-        children: ['hello']
-      })	
+      node = div({class: "test", id: "t"}, "hello")
+      expect(node.name).to eq("div")
+      expect(node.attributes).to eq({class: "test", id: "t"})
+      expect(node.children).to eq(['hello'])
     end
     it 'include number' do
-      expect(div({class: "test", id: "t"}, 33)).to eq({
-        nodeName: "div",
-        attributes: {class: "test", id: "t"},
-        children: [33]
-      })	
+      node = div({class: "test", id: "t"},33)
+      expect(node.name).to eq("div")
+      expect(node.attributes).to eq({class: "test", id: "t"})
+      expect(node.children).to eq([33])
     end
     it 'children' do
-      expect(div({},[div()])).to eq({
-        nodeName: "div",
-        attributes: {},
-        children: [
-          {
-            nodeName: "div",
-            attributes: {},
-            children: []
-          }
-        ]
-      })
+      node = div({},[div()])
+      expect(node.name).to eq("div")
+      expect(node.attributes).to eq({})
+      expect(node.children.length).to eq(1)
+      expect(node.children[0].name).to eq("div")
+      expect(node.children[0].attributes).to eq({})
+      expect(node.children[0].children).to eq([])
     end
     it 'children attributes' do
-      expect(div({class:"test",id:"t"},[div({class:"inner",id:"i"})])).to eq({
-        nodeName: "div",
-        attributes: {class: "test", id: "t"},
-        children: [
-          {
-            nodeName: "div",
-            attributes: {class: "inner", id: "i"},
-            children: []
-          }
-        ]
-      })
+      node = div({class:"test",id:"t"},[div({class:"inner",id:"i"})])
+      expect(node.name).to eq("div")
+      expect(node.attributes).to eq({class: "test", id: "t"})
+      expect(node.children.length).to eq(1)
+      expect(node.children[0].name).to eq("div")
+      expect(node.children[0].attributes).to eq({class: "inner", id: "i"})
+      expect(node.children[0].children).to eq([])
     end
     it 'children are ele and text' do
-      expect(div({class:"test",id:"t"},['hello',div({class:"inner",id:"i"}),'yeah'])).to eq({
-        nodeName: "div",
-        attributes: {class: "test", id: "t"},
-        children: [
-          'hello',
-          {
-            nodeName: "div",
-            attributes: {class: "inner", id: "i"},
-            children: []
-          },
-          'yeah'
-        ]
-      })
+      node = div({class:"test",id:"t"},['hello',div({class:"inner",id:"i"}),'yeah'])
+      expect(node.name).to eq("div")
+      expect(node.attributes).to eq({class: "test", id: "t"})
+      expect(node.children.length).to eq(3)
+      expect(node.children[0]).to eq("hello")
+      expect(node.children[1].name).to eq("div")
+      expect(node.children[1].attributes).to eq({class: "inner", id: "i"})
+      expect(node.children[1].children).to eq([])
+      expect(node.children[2]).to eq("yeah")
     end
   end
   describe 'p' do
     it 'p' do
-      expect(p()).to eq({
-        nodeName: "p",
-        attributes: {},
-        children: []
-      })
+      node = p()
+      expect(node.name).to eq("p")
+      expect(node.attributes).to eq({})
+      expect(node.children).to eq([])
     end
     it 'children attributes' do
-      expect(div({class:"test",id:"t"},[p({class:"inner",id:"i"})])).to eq({
-        nodeName: "div",
-        attributes: {class: "test", id: "t"},
-        children: [
-          {
-            nodeName: "p",
-            attributes: {class: "inner", id: "i"},
-            children: []
-          }
-        ]
-      })
+      node = div({class:"test",id:"t"},[p({class:"inner",id:"i"})])
+      expect(node.name).to eq("div")
+      expect(node.attributes).to eq({class: "test", id: "t"})
+      expect(node.children.length).to eq(1)
+      expect(node.children[0].name).to eq("p")
+      expect(node.children[0].attributes).to eq({class: "inner", id: "i"})
+      expect(node.children[0].children).to eq([])
     end
+  end
+  describe 'should cause an error' do
   end
 end
