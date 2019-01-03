@@ -4,19 +4,10 @@ module Rubelm::Html
     tags.each do |tag_name|
       define_method(tag_name) {|attributes = {}, children = []| 
         if children.instance_of?(Array)
-          node = {
-            nodeName: tag_name,
-            attributes: attributes,
-            children: children
-          }
+          Rubelm::VDOM::VNode.new(tag_name, attributes, children)
         else
-          node = {
-            nodeName: tag_name,
-            attributes: attributes,
-            children: [children]
-          }
+          Rubelm::VDOM::VNode.new(tag_name, attributes, [children])
         end
-        node
       }
     end
   end
