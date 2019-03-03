@@ -44,19 +44,30 @@ module Rubelm::VDOM
     end
     VNode.new(ele.name.downcase, attributes, children)
   end
-  def self.patch(old_node,new_node,root)
-    ele = root.elements.to_ary[0]
-    if old_node.name != new_node.name
-      ele.remove
-      create(new_node,root)
+
+  def self.patch(old_node, new_node, root, index = 0)
+    ele = root
+    if !old_node
+      puts 1
+      create(new_node, root)
+    elsif !new_node
+    elsif old_node.name != new_node.name
+      puts 'name'
+      new_element = create_element(new_node)
+      puts new_element.name
+      ele.children.to_ary[index].replace new_element
     else
-      if ele.attributes.namespace != new_node.attributes
-        ele.attributes.merge!(new_node.attributes)
+      if old_node.attributes != new_node.attributes
+        ele.children.to_ary[index].attributes.merge!(new_node.attributes)
       end
-      new_node.children.each_with_index do |child, i|
-        child.instance_of?(VNode) ? patch(old_node.children[i], child, ele) : ele.text = child
+      new_count = new_node.children.length
+      old_count = old_node.children.length
+      i = 0
+      while i < new_count || i < old_count
+        new_node.children[i].instance_of?(VNode) ? patch(old_node.children[i], new_node.children[i], ele.children.to_ary[index], i) : ele.children.to_ary[index].text = new_node.children[i]
+        i += 1
       end
     end
-    root
+    $document.body
   end
 end
