@@ -14,14 +14,14 @@ gem 'rubelm'
 
 And then execute:
 
-    $ bundle
+$ bundle
 
 ## Usage
 
 Please run on your application directory.
 
-    $ mkdir app
-    $ touch app/app.rb config.ru
+$ mkdir app
+$ touch app/app.rb config.ru
 
 your application directory tree shoud be like this.
 ```
@@ -40,8 +40,8 @@ Bundler.require
 
 run Opal::Sprockets::Server.new { |s|
   s.append_path 'app'
-  s.debug = true
-  s.main = 'app'
+    s.debug = true
+    s.main = 'app'
 }
 ```
 
@@ -53,20 +53,20 @@ require "opal-browser"
 include Rubelm::Html
 view = div({class: "hello"},[
     div({class:"world"}, "hello, world!")
-  ])
+])
 Rubelm::main(view,$document.body)
-```
+  ```
 
- Please run.
-    
-    $ bundle
-    $ bundle exec rackup
+  Please run.
+
+  $ bundle
+  $ bundle exec rackup
 
   You can see on http://localhost:9292
-  
-  ![image](https://user-images.githubusercontent.com/26423094/48298304-af610f80-e4fe-11e8-85ce-785399d58ab6.png)
+
+  ![image](https://user-images.githubusercontent.com/26423094/53695378-53e4c580-3dfe-11e9-813d-31b7c72e509f.png)
 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/anharu2394/rubelm.
+  Bug reports and pull requests are welcome on GitHub at https://github.com/anharu2394/rubelm.
