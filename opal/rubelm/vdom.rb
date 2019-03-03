@@ -1,19 +1,38 @@
-require "opal-browser"
+# frozen_string_literal: true
+
+require 'opal-browser'
 module Rubelm::VDOM
-  require "rubelm/vdom/vnode"
-  def self.render(view,root)
-    self.create(view,root)
+  require 'rubelm/vdom/vnode'
+  def self.render(view, root)
+    create(view, root)
   end
-  def self.create(vdom,parent)
+
+  def self.create(vdom, parent)
     element = Browser::DOM::Element.create(vdom.name)
     vdom.attributes.each do |name, val|
-      element.set(name,val)
+      element.set(name, val)
     end
     vdom.children.each do |child|
-        child.instance_of?(VNode) ? create(child, element) : element.text = child
+      child.instance_of?(VNode) ? create(child, element) : element.text = child
     end
     parent << element
   end
+
+  def self.create_element(vdom, parent = nil)
+    element = Browser::DOM::Element.create(vdom.name)
+    vdom.attributes.each do |name, val|
+      element.set(name, val)
+    end
+    vdom.children.each do |child|
+      child.instance_of?(VNode) ? create(child, element) : element.text = child
+    end
+    if !parent
+      element
+    else
+      parent << element
+    end
+  end
+
   def self.recycle(ele)
     attributes = {}
     children = []
