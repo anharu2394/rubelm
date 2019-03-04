@@ -34,6 +34,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec', '~> 3.0'
 
+  spec.add_development_dependency 'capybara'
+  spec.add_development_dependency 'chromedriver-helper'
   spec.add_development_dependency 'opal-rspec', '0.7.1'
   spec.add_development_dependency 'rack'
+  spec.add_development_dependency 'selenium-webdriver'
 end
