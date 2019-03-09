@@ -1,19 +1,23 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'browser'
+require 'opal-browser'
 Rubelm::Html.def_tags('div', 'p')
 include Rubelm::Html
 describe 'test vdom' do
   describe 'view render' do
-    before do
-      $document.body << Browser::DOM::Element.create('div').add_class('vdom-test')
+    before(:each) do
+      @document_body = Browser::DOM::Element.create('body')
+      @document_body << Browser::DOM::Element.create('div').add_class('vdom-test')
+      @root = @document_body.children.to_ary[0]
     end
     after do
-      $document.body.element_children.to_ary[1].clear
-      $document.body.element_children.to_ary[1].remove
+      @document_body.children.to_ary[0].clear
+      @document_body.children.to_ary[0].remove
     end
-    let(:root) { $document.body.element_children.to_ary[1] }
-    let(:root_child) { $document.body.element_children.to_ary[1].elements.to_ary[0] }
+    let(:root) { @root }
+    let(:root_child) { @root.children.to_ary[0] }
     describe 'div' do
       it 'div' do
         a = Rubelm::VDOM.render(div, root)
@@ -125,7 +129,7 @@ describe 'test vdom' do
       end
     end
     describe 'change Rdom from new_node' do
-      let(:result) { $document.body.element_children.to_ary[1].elements.to_ary[0] }
+      let(:result) { @root.children.to_ary[0] }
       it 'change string' do
         old_node = div({}, 'morning')
         doc = Rubelm::VDOM.render(old_node, root)
@@ -135,7 +139,6 @@ describe 'test vdom' do
         expect(result.text). to eq('night')
       end
       it 'change tag' do
-        puts 'This is test'
         old_node = p
         doc = Rubelm::VDOM.render(old_node, root)
         new_node = div
