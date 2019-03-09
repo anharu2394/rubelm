@@ -65,6 +65,6 @@ module Rubelm::VDOM
         i += 1
       end
     end
-    $document.body
+    root
   end
 end
