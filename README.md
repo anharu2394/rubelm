@@ -19,14 +19,18 @@ gem 'rubelm'
 
 And then execute:
 
+```
 $ bundle
+```
 
 ## Usage
 
 Please run on your application directory.
 
+```
 $ mkdir app
 $ touch app/app.rb config.ru
+```
 
 your application directory tree shoud be like this.
 ```
