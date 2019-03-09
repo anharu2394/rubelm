@@ -1,6 +1,11 @@
 # Rubelm
 
+[![Build Status](https://img.shields.io/badge/status-in%20progress-yellow.svg)]()
+[![Build Status](https://travis-ci.org/anharu2394/rubelm.svg?branch=master)](https://travis-ci.org/anharu2394/rubelm)
+[![Tag Version](https://img.shields.io/github/tag/anharu2394/rubelm.svg)]()
+
 *Rubelm* is A Opal library for building web applications.
+
 Gem URL : https://rubygems.org/gems/rubelm
 
 ## Installation
