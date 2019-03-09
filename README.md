@@ -68,8 +68,10 @@ Rubelm::main(view,$document.body)
 
   Please run.
 
+  ```
   $ bundle
   $ bundle exec rackup
+  ```
 
   You can see on http://localhost:9292
 
