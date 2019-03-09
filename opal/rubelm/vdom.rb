@@ -48,13 +48,10 @@ module Rubelm::VDOM
   def self.patch(old_node, new_node, root, index = 0)
     ele = root
     if !old_node
-      puts 1
       create(new_node, root)
     elsif !new_node
     elsif old_node.name != new_node.name
-      puts 'name'
       new_element = create_element(new_node)
-      puts new_element.name
       ele.children.to_ary[index].replace new_element
     else
       if old_node.attributes != new_node.attributes
@@ -68,6 +65,6 @@ module Rubelm::VDOM
         i += 1
       end
     end
-    $document.body
+    root
   end
 end

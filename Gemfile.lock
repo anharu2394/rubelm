@@ -21,18 +21,21 @@ GEM
     opal-browser (0.2.0)
       opal
       paggio
-    opal-rspec (0.7.0.rc.2)
+    opal-rspec (0.7.1)
       opal (>= 0.11, < 0.12)
       opal-sprockets
-    opal-sprockets (0.4.2.0.11.0.3.1)
+      rake (~> 12.0)
+    opal-sprockets (0.4.3.0.11.0.3.7)
       opal (~> 0.11.0)
-      sprockets (~> 3.1)
+      sprockets (~> 3.7)
       tilt (>= 1.4)
+    opal-test-unit (0.1.2)
+      opal
     paggio (0.2.6)
     parser (2.3.3.1)
       ast (~> 2.2)
     rack (2.0.6)
-    rake (10.5.0)
+    rake (12.3.2)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -57,9 +60,10 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.16)
-  opal-rspec (= 0.7.0.rc.2)
+  opal-rspec (= 0.7.1)
+  opal-test-unit
   rack
-  rake (~> 10.0)
+  rake
   rspec (~> 3.0)
   rubelm!
 
