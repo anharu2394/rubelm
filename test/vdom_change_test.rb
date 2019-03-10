@@ -13,7 +13,7 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
   end
   test 'change string' do
     old_node = div({}, 'morning')
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div({}, 'night')
     new_doc = Rubelm::VDOM.patch(old_node, new_node, @@root)
     result = @@root.children.to_ary[0]
@@ -22,7 +22,7 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
   end
   test 'change tag' do
     old_node = p
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div
     new_doc = Rubelm::VDOM.patch(old_node, new_node, @@root)
     result = @@root.children.to_ary[0]
@@ -30,7 +30,7 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
   end
   test 'change tag and attr' do
     old_node = p({})
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div(class: 'night')
     new_doc = Rubelm::VDOM.patch(old_node, new_node, @@root)
     result = @@root.children.to_ary[0]
@@ -39,7 +39,7 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
   end
   test 'change tag and its children' do
     old_node = p({})
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div({}, div)
     new_doc = Rubelm::VDOM.patch(old_node, new_node, @@root)
     result = @@root.children.to_ary[0]
@@ -47,8 +47,8 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
     assert_equal(result.child.name, 'DIV')
   end
   test 'change tag and its children and attr' do
-    old_node = p({})
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    old_node = p
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div({ class: 'outer' }, div(class: 'inner'))
     new_doc = Rubelm::VDOM.patch(old_node, new_node, @@root)
     result = @@root.children.to_ary[0]
@@ -59,7 +59,7 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
   end
   test 'change one updated attr' do
     old_node = div(class: 'morning')
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div(class: 'night')
     new_doc = Rubelm::VDOM.patch(old_node, new_node, @@root)
     result = @@root.children.to_ary[0]
@@ -72,7 +72,7 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
       "data-url": '/opal',
       "data-hoge": 'hoge'
     )
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div(
       class: 'night',
       id: 'a',
@@ -93,7 +93,7 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
                      "data-url": '/opal',
                      "data-hoge": 'hoge'
                    }, 'moring')
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div({
                      class: 'night',
                      id: 'a',
@@ -110,7 +110,7 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
   end
   test 'change one updated attr and child attr' do
     old_node = div({ class: 'morning' }, [div(class: 'hello')])
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div({ class: 'night' }, div(class: 'bye'))
     new_doc = Rubelm::VDOM.patch(old_node, new_node, @@root)
     result = @@root.children.to_ary[0]
@@ -119,7 +119,7 @@ class VDOMChangeTest < Opal::Test::Unit::TestCase
   end
   test 'increase one children' do
     old_node = div({}, [div, p])
-    doc = Rubelm::VDOM.render(old_node, @@root)
+    doc = Rubelm::VDOM.render(old_node, nil, nil, @@root)
     new_node = div({}, [p, div, p])
     new_doc = Rubelm::VDOM.patch(old_node, new_node, @@root)
     result = @@root.children.to_ary[0]

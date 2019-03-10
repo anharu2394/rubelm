@@ -3,8 +3,12 @@
 require 'opal-browser'
 module Rubelm::VDOM
   require 'rubelm/vdom/vnode'
-  def self.render(view, root)
-    create(view, root)
+  def self.render(view, state, actions, root)
+    if view.class == Proc
+      create(view.call(state, actions), root)
+    else
+      create(view, root)
+    end
   end
 
   def self.create(vdom, parent)
