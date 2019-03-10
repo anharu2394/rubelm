@@ -8,8 +8,7 @@ module Rubelm
   end
   require 'rubelm/html'
   require 'rubelm/vdom'
+  require 'rubelm/component'
 end
 
-def component(&block)
-  block
-end
+include Rubelm::Component
