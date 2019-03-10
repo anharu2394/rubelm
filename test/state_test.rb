@@ -28,7 +28,7 @@ class VDOMRenderTest < Opal::Test::Unit::TestCase
       div(class: state.name)
     end
     a = Rubelm::VDOM.render(view, initial_state, nil, @@root)
-    assert_equal('0', a.child.inner_html)
+    assert_equal('anharu', a.child.class_name)
     @@root.remove
   end
 end
