@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 
-require 'rubelm/version'
+if RUBY_ENGINE == 'opal'
+  require 'opal'
+  require 'opal-browser'
+  require 'rubelm/main'
+else
+  require 'opal'
+  require 'opal-browser'
+  require 'rubelm/version'
+  Opal.append_path(__dir__)
+end
 
-require 'rubelm/main' if RUBY_ENGINE == 'opal'
+module Rubelm
+end
