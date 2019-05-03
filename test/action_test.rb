@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-Rubelm::Html.def_tags('div', 'p')
+Rubelm::Html.def_tags('div', 'p', 'input')
 include Rubelm::Html
 
 class VDOMRenderTest < Opal::Test::Unit::TestCase
   setup do
     @@test_body = Browser::DOM::Element.create('body')
 
-    @@test_body << Browser::DOM::Element.create('div').add_class('vdom-test')
-    @@root = @@test_body.children.to_ary[0]
+    $document.body << Browser::DOM::Element.create('div').add_class('vdom-test')
+    @@root = $document.body.children.to_ary[0]
   end
   test 'simple set_count action' do
     State = Struct.new(:count)
@@ -26,8 +26,9 @@ class VDOMRenderTest < Opal::Test::Unit::TestCase
           ])
     end
     a = Rubelm::VDOM.render(view, initial_state, Actions, @@root)
-    `document.body.querySelector('.button').click()`
-    assert_equal('10', a.child.inner_html)
+    a.at_css('.button').trigger('click')
+    assert_equal('10', a.child.child.inner_html)
+    # TODO: Eventを確認
     @@root.remove
   end
   test 'up action' do
@@ -40,7 +41,7 @@ class VDOMRenderTest < Opal::Test::Unit::TestCase
         end
       end
     end
-    view = component do |state, _actions|
+    view = component do |state, actions|
       div({}, [
             div({}, 'Count:' + state.count.to_s),
             input(type: 'button', onclick: actions.up(1), class: 'button', value: 'Set count')
