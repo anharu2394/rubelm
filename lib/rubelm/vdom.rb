@@ -5,7 +5,8 @@ module Rubelm::VDOM
   require 'rubelm/vdom/vnode'
   def self.render(view, state, actions, root)
     if view.class == Proc
-      create(view.call(state, actions), root)
+      actions_instance = actions&.new
+      create(view.call(state, actions_instance), root)
     else
       create(view, root)
     end
